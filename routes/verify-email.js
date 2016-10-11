@@ -31,8 +31,14 @@ module.exports = function(server) {
 
                     if(user.status === Users.Status.PENDING_EMAIL_VERIFICATION) {
 
-                        return user.confirmEmail({notify: true}).then(function() {
-                            return { email_confirmed: true, status: Users.Status.PENDING_FIRST_LOGIN };
+                        return user.confirmEmail({notify: false}).then(function() {
+                            if(user.lang === 'fr') {
+                                reply.redirect('http://alfredsommelier.com/abonnement/confirmed.html');
+                            }
+                            else {
+                                reply.redirect('http://alfredsommelier.com/signup/confirmed.html');
+                            }
+                            //return { email_confirmed: true, status: Users.Status.PENDING_FIRST_LOGIN };
                         });
                     }
                     else {
